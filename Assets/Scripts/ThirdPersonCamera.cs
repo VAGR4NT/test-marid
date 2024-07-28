@@ -19,7 +19,10 @@ public class NewBehaviourScript : MonoBehaviour
     float yaw; // Horizontal camera angle movement
     float pitch; // Vertical camera angle movement
 
-
+    public Transform target2; 
+    public float smoothSpeed = 0.125f;
+    public Vector3 offset;
+    bool isLocked = false;
     private void Start()
     {
         if (lockCursor) 
@@ -45,5 +48,21 @@ public class NewBehaviourScript : MonoBehaviour
 
         transform.position = target.position - transform.forward * distFromTarget; // Moving the camera to keep up with player/target if target moves
 
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isLocked = !isLocked;
+        }
+
+        if (target2 != null && isLocked) //if there is a target and left control is pressed
+        {
+            Debug.Log("Left Control key pressed.");
+            LockOn(); //lock on
+        }
+
+    }
+    void LockOn()
+    { 
+
+        transform.LookAt(target2); //direct toward target
     }
 }
